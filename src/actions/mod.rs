@@ -18,8 +18,8 @@ impl Plugin for ActionsPlugin {
         app.init_resource::<Actions>().add_systems(
             Update,
             (
-                set_movement_actions,
                 set_pause,
+                set_movement_actions,
             )
                 .run_if(in_state(GameState::Playing)),
         );
