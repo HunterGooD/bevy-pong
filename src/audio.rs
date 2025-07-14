@@ -1,6 +1,6 @@
 use crate::actions::{set_movement_actions, Actions};
 use crate::loading::AudioAssets;
-use crate::{GameState, Pause};
+use crate::{GameState, PlayingStates};
 use bevy::prelude::*;
 use bevy_kira_audio::prelude::*;
 
@@ -16,7 +16,7 @@ impl Plugin for InternalAudioPlugin {
                 control_flying_sound
                     .after(set_movement_actions)
                     .run_if(in_state(GameState::Playing))
-                    .run_if(in_state(Pause(false))),
+                    .run_if(in_state(PlayingStates::Play)),
             );
     }
 }

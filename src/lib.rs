@@ -5,16 +5,27 @@ mod audio;
 mod loading;
 mod menu;
 mod player;
+mod pause;
 
 use crate::actions::ActionsPlugin;
 use crate::audio::InternalAudioPlugin;
 use crate::loading::LoadingPlugin;
 use crate::menu::MenuPlugin;
-use crate::player::PlayerPlugin;
+use crate::pause::PauseMenuPlugin;
 
+use crate::player::PlayerPlugin;
 use bevy::app::App;
 #[cfg(debug_assertions)]
 use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
+#[cfg(debug_assertions)]
+use bevy_inspector_egui::prelude::*;
+#[cfg(debug_assertions)]
+use bevy_inspector_egui::quick::{WorldInspectorPlugin};
+#[cfg(debug_assertions)]
+use bevy_inspector_egui::bevy_egui::EguiPlugin;
+
+#[cfg(debug_assertions)]
+use bevy_reflect::Reflect;
 use bevy::prelude::*;
 
 // This example game uses States to separate logic
@@ -31,22 +42,11 @@ enum GameState {
     Menu,
 }
 
-#[derive(States, Clone, Eq, PartialEq, Debug, Hash)]
-struct Pause(bool);
-impl Pause {
-    fn is_pause(&self) -> bool {
-        self.0
-    }
-
-    fn change(&mut self) {
-        self.0 = !self.0
-    }
-}
-
-impl Default for Pause {
-    fn default() -> Self {
-        Self(false)
-    }
+#[derive(States, Reflect, Default, Clone, Eq, PartialEq, Debug, Hash, InspectorOptions)]
+enum PlayingStates {
+    #[default]
+    Play,
+    Pause,
 }
 
 pub struct GamePlugin;
@@ -55,13 +55,14 @@ impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
         app
             .init_state::<GameState>()
-            .init_state::<Pause>()
+            .init_state::<PlayingStates>()
             .add_plugins((
             LoadingPlugin,
             MenuPlugin,
             ActionsPlugin,
             InternalAudioPlugin,
             PlayerPlugin,
+            PauseMenuPlugin,
         ));
 
         #[cfg(debug_assertions)]
@@ -69,6 +70,8 @@ impl Plugin for GamePlugin {
             app.add_plugins((
                 FrameTimeDiagnosticsPlugin::default(),
                 LogDiagnosticsPlugin::default(),
+                EguiPlugin::default(),
+                WorldInspectorPlugin::new(),
             ));
         }
     }

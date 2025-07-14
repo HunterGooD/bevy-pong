@@ -14,8 +14,8 @@ impl Plugin for MenuPlugin {
 }
 
 #[derive(Component)]
-struct ButtonColors {
-    normal: Color,
+pub struct ButtonColors {
+    pub(crate) normal: Color,
     hovered: Color,
 }
 

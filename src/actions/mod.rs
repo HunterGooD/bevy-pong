@@ -1,9 +1,9 @@
 use bevy::math::Vec3Swizzles;
 use bevy::prelude::*;
 
-use crate::actions::game_control::{get_movement, GameControl, is_pressed};
+use crate::actions::game_control::{get_movement, GameControl};
 use crate::player::Player;
-use crate::{GameState, Pause};
+use crate::{GameState, PlayingStates};
 
 mod game_control;
 
@@ -19,8 +19,9 @@ impl Plugin for ActionsPlugin {
             Update,
             (
                 set_pause,
-                set_movement_actions,
+                set_movement_actions.run_if(in_state(PlayingStates::Play)),
             )
+                .chain()
                 .run_if(in_state(GameState::Playing)),
         );
     }
@@ -33,20 +34,19 @@ pub struct Actions {
 
 pub fn set_pause(
     keyboard_input: Res<ButtonInput<KeyCode>>,
-    mut next_state: ResMut<NextState<Pause>>,
-    mut pause: Local<Pause>,
+    state: Res<State<PlayingStates>>,
+    mut next_state: ResMut<NextState<PlayingStates>>,
 ) {
-    let escape_press = is_pressed(GameControl::Escape, &keyboard_input);
+    let escape_press = GameControl::Escape.is_just_pressed(&keyboard_input);
+
     if !escape_press {
         return;
     }
 
-    let mut state_set = Pause(true);
-    if pause.is_pause() {
-        state_set = Pause(false);
+    match state.get() {
+        PlayingStates::Play=> next_state.set(PlayingStates::Pause),
+        PlayingStates::Pause=> next_state.set(PlayingStates::Play)
     }
-    next_state.set(state_set);
-    pause.change();
 }
 
 pub fn set_movement_actions(
