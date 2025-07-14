@@ -31,11 +31,32 @@ enum GameState {
     Menu,
 }
 
+#[derive(States, Clone, Eq, PartialEq, Debug, Hash)]
+struct Pause(bool);
+impl Pause {
+    fn is_pause(&self) -> bool {
+        self.0
+    }
+
+    fn change(&mut self) {
+        self.0 = !self.0
+    }
+}
+
+impl Default for Pause {
+    fn default() -> Self {
+        Self(false)
+    }
+}
+
 pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app.init_state::<GameState>().add_plugins((
+        app
+            .init_state::<GameState>()
+            .init_state::<Pause>()
+            .add_plugins((
             LoadingPlugin,
             MenuPlugin,
             ActionsPlugin,

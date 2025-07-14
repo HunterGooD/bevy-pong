@@ -1,6 +1,6 @@
 use crate::actions::Actions;
 use crate::loading::TextureAssets;
-use crate::GameState;
+use crate::{GameState, Pause};
 use bevy::prelude::*;
 
 pub struct PlayerPlugin;
@@ -13,7 +13,10 @@ pub struct Player;
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(OnEnter(GameState::Playing), spawn_player)
-            .add_systems(Update, move_player.run_if(in_state(GameState::Playing)));
+            .add_systems(Update, move_player
+                .run_if(in_state(GameState::Playing))
+                .run_if(in_state(Pause(false)))
+            );
     }
 }
 
