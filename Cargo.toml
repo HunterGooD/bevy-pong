@@ -10,7 +10,10 @@ exclude = ["dist", "build", "assets", "credits"]
 opt-level = 3
 
 [profile.dev]
-opt-level = 1
+incremental = true
+opt-level = 0
+lto = "off"
+
 
 # This is used by trunk as it doesn't support custom profiles: https://github.com/trunk-rs/trunk/issues/605
 # xbuild also uses this profile for building android AABs because I couldn't find a configuration for it
@@ -43,10 +46,8 @@ bevy = { version = "0.16", default-features = false, features = [
     "bevy_core_pipeline",
     "bevy_gilrs",
     "bevy_gizmos",
-    "bevy_gltf",
     "bevy_log",
     "bevy_mesh_picking_backend",
-    "bevy_pbr",
     "bevy_picking",
     "bevy_render",
     "bevy_scene",
@@ -60,14 +61,12 @@ bevy = { version = "0.16", default-features = false, features = [
     "bevy_winit",
     "custom_cursor",
     "default_font",
-    "hdr",
     "multi_threaded",
     "png",
-    "smaa_luts",
     "sysinfo_plugin",
-    "tonemapping_luts",
     "webgl2",
     "x11",
+    "dynamic_linking",
 ] }
 avian2d = "0.3"
 bevy_kira_audio = { version = "0.23.0" }

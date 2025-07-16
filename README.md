@@ -90,6 +90,12 @@ nix develop --impure
 If using nixgl, then .e.g. `gl cargo run`, other use
 `cargo` as usual.
 
+## IDE Setting run 
+  In setting runner write this
+```
+run --features bevy/dynamic_linking --package <name_project> --bin <name_project>
+```
+
 # Getting started with Bevy
 
 You should check out the Bevy website for [links to resources][bevy-learn] and the [Bevy Cheat Book] for a bunch of helpful documentation and examples. I can also recommend the [official Bevy Discord server][bevy-discord] for keeping up to date with the development and getting help from other Bevy users.

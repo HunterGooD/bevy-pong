@@ -87,7 +87,31 @@ fn setup_menu(mut commands: Commands) {
                     ChangeState(GameState::Playing),
                 ))
                 .with_child((
-                    Text::new("Not play"),
+                    Text::new("Settings"),
+                    TextFont {
+                        font_size: 40.0,
+                        ..default()
+                    },
+                    TextColor(Color::linear_rgb(0.9, 0.9, 0.9)),
+                ));
+
+            let button_colors = ButtonColors::default();
+            children
+                .spawn((
+                    Button,
+                    Node {
+                        width: Val::Px(300.0),
+                        height: Val::Px(50.0),
+                        justify_content: JustifyContent::Center,
+                        align_items: AlignItems::Center,
+                        ..Default::default()
+                    },
+                    BackgroundColor(button_colors.normal),
+                    button_colors,
+                    ChangeState(GameState::Playing),
+                ))
+                .with_child((
+                    Text::new("Exit"),
                     TextFont {
                         font_size: 40.0,
                         ..default()
@@ -123,7 +147,7 @@ fn click_play_button(
                     next_state.set(state.0.clone());
                 } else if let Some(link) = open_link {
                     if let Err(error) = webbrowser::open(link.0) {
-                        warn!("Failed to open link {error:?}");
+                        warn!("Failed open link {error:?}");
                     }
                 }
             }
