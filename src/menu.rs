@@ -70,6 +70,31 @@ fn setup_menu(mut commands: Commands) {
                     },
                     TextColor(Color::linear_rgb(0.9, 0.9, 0.9)),
                 ));
+
+
+            let button_colors = ButtonColors::default();
+            children
+                .spawn((
+                    Button,
+                    Node {
+                        width: Val::Px(300.0),
+                        height: Val::Px(50.0),
+                        justify_content: JustifyContent::Center,
+                        align_items: AlignItems::Center,
+                        ..Default::default()
+                    },
+                    BackgroundColor(button_colors.normal),
+                    button_colors,
+                    ChangeState(GameState::Playing),
+                ))
+                .with_child((
+                    Text::new("Not play"),
+                    TextFont {
+                        font_size: 40.0,
+                        ..default()
+                    },
+                    TextColor(Color::linear_rgb(0.9, 0.9, 0.9)),
+                ));
         });
 }
 

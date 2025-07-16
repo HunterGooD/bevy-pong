@@ -45,7 +45,8 @@ pub fn set_pause(
 
     match state.get() {
         PlayingStates::Play=> next_state.set(PlayingStates::Pause),
-        PlayingStates::Pause=> next_state.set(PlayingStates::Play)
+        PlayingStates::Pause=> next_state.set(PlayingStates::Play),
+        _ => () // skip others states
     }
 }
 

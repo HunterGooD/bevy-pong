@@ -47,6 +47,7 @@ enum PlayingStates {
     #[default]
     Play,
     Pause,
+    GameOver,
 }
 
 pub struct GamePlugin;
