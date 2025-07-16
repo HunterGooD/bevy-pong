@@ -1,5 +1,6 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
     <Package
+     <!-- TODO: rename this -->s
         Name="BevyPong"
         Manufacturer="HunterGooD"
         UpgradeCode="91374e02-c875-4f30-8cd9-061c8d2011be"
@@ -34,6 +35,7 @@
         <!-- Installs the actual files -->
         <ComponentGroup Id="MainComponent" Directory="INSTALLFOLDER">
             <Component>
+                <!-- TODO: rename this -->s
                 <File Id="Executable" Source="..\..\..\target\dist\bevy_pong.exe" Vital="true" />
             </Component>
         </ComponentGroup>

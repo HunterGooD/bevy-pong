@@ -4,8 +4,8 @@ mod actions;
 mod audio;
 mod loading;
 mod menu;
-mod player;
 mod pause;
+mod player;
 
 use crate::actions::ActionsPlugin;
 use crate::audio::InternalAudioPlugin;
@@ -18,15 +18,15 @@ use bevy::app::App;
 #[cfg(debug_assertions)]
 use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 #[cfg(debug_assertions)]
+use bevy_inspector_egui::bevy_egui::EguiPlugin;
+#[cfg(debug_assertions)]
 use bevy_inspector_egui::prelude::*;
 #[cfg(debug_assertions)]
-use bevy_inspector_egui::quick::{WorldInspectorPlugin};
-#[cfg(debug_assertions)]
-use bevy_inspector_egui::bevy_egui::EguiPlugin;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
+use bevy::prelude::*;
 #[cfg(debug_assertions)]
 use bevy_reflect::Reflect;
-use bevy::prelude::*;
 
 // This example game uses States to separate logic
 // See https://bevy-cheatbook.github.io/programming/states.html
@@ -54,17 +54,16 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app
-            .init_state::<GameState>()
+        app.init_state::<GameState>()
             .init_state::<PlayingStates>()
             .add_plugins((
-            LoadingPlugin,
-            MenuPlugin,
-            ActionsPlugin,
-            InternalAudioPlugin,
-            PlayerPlugin,
-            PauseMenuPlugin,
-        ));
+                LoadingPlugin,
+                MenuPlugin,
+                ActionsPlugin,
+                InternalAudioPlugin,
+                PlayerPlugin,
+                PauseMenuPlugin,
+            ));
 
         #[cfg(debug_assertions)]
         {

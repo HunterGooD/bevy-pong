@@ -13,9 +13,11 @@ pub struct Player;
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(OnEnter(GameState::Playing), spawn_player)
-            .add_systems(Update, move_player
-                .run_if(in_state(GameState::Playing))
-                .run_if(in_state(PlayingStates::Play))
+            .add_systems(
+                Update,
+                move_player
+                    .run_if(in_state(GameState::Playing))
+                    .run_if(in_state(PlayingStates::Play)),
             );
     }
 }

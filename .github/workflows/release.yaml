@@ -13,8 +13,8 @@ on:
 
 env:
   # This variable is used to name release output files.
-  GAME_EXECUTABLE_NAME: bevy_pong
-  GAME_OSX_APP_NAME: BevyPong
+  GAME_EXECUTABLE_NAME: bevy_pong # TODO: rename this
+  GAME_OSX_APP_NAME: BevyPong # TODO: rename this
 
 permissions:
   contents: write

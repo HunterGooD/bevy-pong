@@ -71,7 +71,6 @@ fn setup_menu(mut commands: Commands) {
                     TextColor(Color::linear_rgb(0.9, 0.9, 0.9)),
                 ));
 
-
             let button_colors = ButtonColors::default();
             children
                 .spawn((

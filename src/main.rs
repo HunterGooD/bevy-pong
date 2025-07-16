@@ -6,7 +6,7 @@ use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
 use bevy::winit::WinitWindows;
 use bevy::DefaultPlugins;
-use bevy_pong::GamePlugin;
+use bevy_pong::GamePlugin; // TODO: rename this
 use std::io::Cursor;
 use winit::window::Icon;
 

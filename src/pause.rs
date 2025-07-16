@@ -50,22 +50,21 @@ fn setup_pause(mut commands: Commands) {
                 .with_children(|children| {
                     // text pause
                     children
-                        .spawn((
-                            Node {
-                                width: Val::Percent(100.0),
-                                height: Val::Percent(50.0),
-                                flex_direction: FlexDirection::Column,
-                                align_items: AlignItems::Center,
-                                justify_content: JustifyContent::Center,
+                        .spawn((Node {
+                            width: Val::Percent(100.0),
+                            height: Val::Percent(50.0),
+                            flex_direction: FlexDirection::Column,
+                            align_items: AlignItems::Center,
+                            justify_content: JustifyContent::Center,
+                            ..default()
+                        },))
+                        .with_child((
+                            Text::new("Pause menu"),
+                            TextFont {
+                                font_size: 40.0,
                                 ..default()
                             },
-                        )).with_child((
-                        Text::new("Pause menu"),
-                        TextFont {
-                            font_size: 40.0,
-                            ..default()
-                        },
-                        TextColor(Color::linear_rgb(0.9, 0.9, 0.9)),
+                            TextColor(Color::linear_rgb(0.9, 0.9, 0.9)),
                         ));
                     // Button continue ant etc.
                     let button_colors = ButtonColors::default();
