@@ -32,6 +32,7 @@ fn main() {
                     ..default()
                 }),
         )
+        .add_plugins(bevy_panic_handler::PanicHandler::new().build())
         .add_plugins(GamePlugin)
         .add_systems(Startup, set_window_icon)
         .run();

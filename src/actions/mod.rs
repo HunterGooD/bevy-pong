@@ -3,7 +3,7 @@ use bevy::prelude::*;
 
 use crate::actions::game_control::{get_movement, GameControl};
 use crate::player::Player;
-use crate::{GameState, PlayingStates};
+use crate::{GameState, MenuStates};
 
 mod game_control;
 
@@ -19,7 +19,7 @@ impl Plugin for ActionsPlugin {
             Update,
             (
                 set_pause,
-                set_movement_actions.run_if(in_state(PlayingStates::Play)),
+                set_movement_actions.run_if(in_state(MenuStates::Disable)),
             )
                 .chain()
                 .run_if(in_state(GameState::Playing)),
@@ -34,8 +34,8 @@ pub struct Actions {
 
 pub fn set_pause(
     keyboard_input: Res<ButtonInput<KeyCode>>,
-    state: Res<State<PlayingStates>>,
-    mut next_state: ResMut<NextState<PlayingStates>>,
+    state: Res<State<MenuStates>>,
+    mut next_state: ResMut<NextState<MenuStates>>,
 ) {
     let escape_press = GameControl::Escape.is_just_pressed(&keyboard_input);
 
@@ -44,8 +44,9 @@ pub fn set_pause(
     }
 
     match state.get() {
-        PlayingStates::Play => next_state.set(PlayingStates::Pause),
-        PlayingStates::Pause => next_state.set(PlayingStates::Play),
+        // TODO: придумать систему которая бы сама контролировала смену состояний через ивенты чтобы изменения были в одном месте и трекать откуда пришел ивент
+        MenuStates::Disable => next_state.set(MenuStates::PauseMenu),
+        MenuStates::PauseMenu => next_state.set(MenuStates::Disable),
         _ => (), // skip others states
     }
 }

@@ -1,6 +1,6 @@
 use crate::actions::Actions;
 use crate::loading::TextureAssets;
-use crate::{GameState, PlayingStates};
+use crate::{GameState, MenuStates};
 use bevy::prelude::*;
 
 pub struct PlayerPlugin;
@@ -17,7 +17,7 @@ impl Plugin for PlayerPlugin {
                 Update,
                 move_player
                     .run_if(in_state(GameState::Playing))
-                    .run_if(in_state(PlayingStates::Play)),
+                    .run_if(in_state(MenuStates::Disable)),
             );
     }
 }
