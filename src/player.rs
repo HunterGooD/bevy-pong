@@ -1,7 +1,4 @@
-use crate::actions::Actions;
-use crate::loading::TextureAssets;
-use crate::{GameState, MenuStates};
-use bevy::prelude::*;
+use crate::prelude::*;
 
 pub struct PlayerPlugin;
 
@@ -12,11 +9,11 @@ pub struct Player;
 /// Player logic is only active during the State `GameState::Playing`
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(GameState::Playing), spawn_player)
+        app.add_systems(OnEnter(GameStates::Playing), spawn_player)
             .add_systems(
                 Update,
                 move_player
-                    .run_if(in_state(GameState::Playing))
+                    .run_if(in_state(GameStates::Playing))
                     .run_if(in_state(MenuStates::Disable)),
             );
     }

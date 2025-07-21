@@ -1,9 +1,7 @@
-use bevy::math::Vec3Swizzles;
-use bevy::prelude::*;
-
+// TODO: this replace in input module
 use crate::actions::game_control::{get_movement, GameControl};
 use crate::player::Player;
-use crate::{GameState, MenuStates};
+use crate::prelude::*;
 
 mod game_control;
 
@@ -22,7 +20,7 @@ impl Plugin for ActionsPlugin {
                 set_movement_actions.run_if(in_state(MenuStates::Disable)),
             )
                 .chain()
-                .run_if(in_state(GameState::Playing)),
+                .run_if(in_state(GameStates::Playing)),
         );
     }
 }

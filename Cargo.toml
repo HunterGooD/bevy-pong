@@ -10,6 +10,8 @@ exclude = ["dist", "build", "assets", "credits"]
 opt-level = 3
 
 [profile.dev]
+debug = 0
+strip = "debuginfo"
 incremental = true
 opt-level = 0
 lto = "off"
@@ -29,11 +31,13 @@ inherits = "release"
 opt-level = 3
 lto = true
 codegen-units = 1
-strip = true
+strip = "debuginfo"
 
 [features]
 dev = [
     "bevy/dynamic_linking",
+    "bevy/file_watcher",
+    "bevy/asset_processor"
 ]
 
 # All of Bevy's default features exept for the audio related ones (bevy_audio, vorbis), since they clash with bevy_kira_audio
@@ -70,6 +74,10 @@ bevy = { version = "0.16", default-features = false, features = [
 ] }
 bevy-panic-handler = "5.0"
 avian2d = "0.3"
+leafwing-input-manager = "0.17"
+moonshine-save = "0.5"# TODO: save simple scene
+bevy_hanabi = "0.16"# TODO: add simple particles
+bevy_tweening = "0.13"# TODO: add simple tweaning for ui or others...
 bevy_kira_audio = { version = "0.23.0" }
 bevy_asset_loader = { version = "0.23.0" }
 bevy-inspector-egui = "0.32"

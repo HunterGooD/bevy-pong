@@ -1,5 +1,5 @@
 use bevy::prelude::{ButtonInput, KeyCode, Res};
-
+// TODO: this replace in input module
 pub enum GameControl {
     Up,
     Down,
