@@ -72,7 +72,6 @@ bevy = { version = "0.16", default-features = false, features = [
     "x11",
     "dynamic_linking",
 ] }
-bevy-panic-handler = "5.0"
 avian2d = "0.3"
 leafwing-input-manager = "0.17"
 moonshine-save = "0.5"# TODO: save simple scene
@@ -83,13 +82,15 @@ bevy_asset_loader = { version = "0.23.0" }
 bevy-inspector-egui = "0.32"
 bevy_reflect = "0.16"
 rand = { version = "0.8.3" }
-webbrowser = { version = "1", features = ["hardened"] }
 
 # keep the following in sync with Bevy's dependencies
 winit = { version = "0.30", default-features = false }
 image = { version = "0.25", default-features = false }
 ## This greatly improves WGPU's performance due to its heavy use of trace! calls
 log = { version = "0.4", features = ["max_level_debug", "release_max_level_warn"] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+bevy-panic-handler = "5.0"
 
 [build-dependencies]
 embed-resource = "1"

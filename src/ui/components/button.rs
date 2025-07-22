@@ -42,8 +42,8 @@ pub fn default_button(in_text: impl Into<String>, label: ButtonLabel) -> impl Bu
         label,
         BorderRadius::MAX,
         Node {
-            width: Val::Px(300.0),
-            height: Val::Px(80.0),
+            width: Val::Percent(80.0),
+            height: Val::Percent(25.0),
             justify_content: JustifyContent::Center,
             align_items: AlignItems::Center,
             ..Default::default()

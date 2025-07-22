@@ -9,8 +9,9 @@ pub(crate) use leafwing_input_manager::prelude::*;
 pub(crate) use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 #[cfg(debug_assertions)]
 pub(crate) use bevy_inspector_egui::bevy_egui::EguiPlugin;
-#[cfg(debug_assertions)]
-pub(crate) use bevy_inspector_egui::prelude::*;
+// TODO: unused
+// #[cfg(debug_assertions)]
+// pub(crate) use bevy_inspector_egui::prelude::*;
 #[cfg(debug_assertions)]
 pub(crate) use bevy_inspector_egui::quick::WorldInspectorPlugin;
 

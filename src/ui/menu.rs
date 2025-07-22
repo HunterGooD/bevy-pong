@@ -32,8 +32,9 @@ fn setup_menu(mut commands: Commands) {
         ))
         .with_child((
             Node {
-                width: Val::Percent(30.0),
+                width: Val::Percent(55.0),
                 height: Val::Percent(40.0),
+                margin: UiRect::bottom(Val::Percent(5.0)),
                 flex_direction: FlexDirection::Column,
                 align_items: AlignItems::Center,
                 justify_content: JustifyContent::SpaceAround,

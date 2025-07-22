@@ -11,13 +11,15 @@ use std::io::Cursor;
 use winit::window::Icon;
 
 fn main() {
-    App::new()
-        .insert_resource(ClearColor(Color::linear_rgb(0.4, 0.4, 0.4)))
+    let mut app = App::new();
+
+    app.insert_resource(ClearColor(Color::linear_rgb(0.4, 0.4, 0.4)))
         .add_plugins(
             DefaultPlugins
                 .set(WindowPlugin {
                     primary_window: Some(Window {
                         title: "Bevy Pong!!!".to_string(), // TODO: rename this
+                        resolution: (1280., 720.).into(),
                         // Bind to canvas included in `index.html`
                         canvas: Some("#bevy".to_owned()),
                         fit_canvas_to_parent: true,
@@ -32,10 +34,13 @@ fn main() {
                     ..default()
                 }),
         )
-        .add_plugins(bevy_panic_handler::PanicHandler::new().build())
         .add_plugins(GamePlugin)
-        .add_systems(Startup, set_window_icon)
-        .run();
+        .add_systems(Startup, set_window_icon);
+
+    #[cfg(not(target_arch = "wasm32"))]
+    app.add_plugins(bevy_panic_handler::PanicHandler::new().build());
+
+    app.run();
 }
 
 // Sets the icon on windows and X11

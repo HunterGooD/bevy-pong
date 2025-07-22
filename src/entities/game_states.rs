@@ -13,7 +13,7 @@ pub enum GameStates {
     Menu,
 }
 
-#[derive(States, Reflect, Default, Clone, Eq, PartialEq, Debug, Hash, InspectorOptions)]
+#[derive(States, Reflect, Default, Clone, Eq, PartialEq, Debug, Hash)]
 pub enum MenuStates {
     #[default]
     Disable,
@@ -23,7 +23,7 @@ pub enum MenuStates {
     GameOver,
 }
 
-#[derive(States, Reflect, Default, Clone, Eq, PartialEq, Debug, Hash, InspectorOptions)]
+#[derive(States, Reflect, Default, Clone, Eq, PartialEq, Debug, Hash)]
 pub enum SettingsStates {
     #[default]
     Audio,
