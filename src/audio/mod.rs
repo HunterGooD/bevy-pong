@@ -22,7 +22,12 @@ impl Plugin for InternalAudioPlugin {
 #[derive(Resource)]
 pub struct FlyingAudio(pub Handle<AudioInstance>);
 
-fn start_audio(mut commands: Commands, audio_assets: Res<AudioAssets>,  global_volume: Res<GlobalVolume>, audio: Res<Audio>) {
+fn start_audio(
+    mut commands: Commands,
+    audio_assets: Res<AudioAssets>,
+    global_volume: Res<GlobalVolume>,
+    audio: Res<Audio>,
+) {
     audio.pause();
     let handle = audio
         .play(audio_assets.flying.clone())

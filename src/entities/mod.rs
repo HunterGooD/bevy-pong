@@ -9,8 +9,7 @@ pub struct EntityPlugin;
 
 impl Plugin for EntityPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .init_state::<GameStates>()
+        app.init_state::<GameStates>()
             .enable_state_scoped_entities::<GameStates>()
             .init_state::<MenuStates>()
             .enable_state_scoped_entities::<MenuStates>()

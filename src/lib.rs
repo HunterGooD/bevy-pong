@@ -1,10 +1,10 @@
 #![allow(clippy::type_complexity)]
-mod input;
 mod audio;
 mod entities;
 mod event_managers;
-mod loading;
 mod game_plugins;
+mod input;
+mod loading;
 mod prelude;
 mod ui;
 
@@ -18,15 +18,14 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugins((
-                EntityPlugin,
-                LoadingPlugin,
-                UIPlugin,
-                InGamePlugins,
-                InputPlugin,
-                InternalAudioPlugin,
-            ));
+        app.add_plugins((
+            EntityPlugin,
+            LoadingPlugin,
+            UIPlugin,
+            InGamePlugins,
+            InputPlugin,
+            InternalAudioPlugin,
+        ));
 
         #[cfg(debug_assertions)]
         {

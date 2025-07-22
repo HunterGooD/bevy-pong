@@ -1,10 +1,6 @@
 use crate::prelude::{ui::*, *};
+use crate::ui::{menu::*, pause::*, settings::*};
 use bevy_kira_audio::prelude::*;
-use crate::ui::{
-    menu::*,
-    settings::*,
-    pause::*,
-};
 
 pub mod components;
 pub mod menu;
@@ -15,16 +11,11 @@ pub struct UIPlugin;
 
 impl Plugin for UIPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugins((
-                PauseMenuPlugin,
-                SettingsPlugin,
-                MenuPlugin,
-            ))
+        app.add_plugins((PauseMenuPlugin, SettingsPlugin, MenuPlugin))
             .add_systems(
-            Update,
-            button_processing.run_if(not(in_state(MenuStates::Disable))),
-        );
+                Update,
+                button_processing.run_if(not(in_state(MenuStates::Disable))),
+            );
     }
 }
 
@@ -68,15 +59,9 @@ fn button_processing(
                     next_state_menu.set(MenuStates::Setting);
                     info!("setting pressed");
                 }
-                ButtonLabel::Audio => {
-                    settings_next_state.set(SettingsStates::Audio)
-                }
-                ButtonLabel::Controls => {
-                    settings_next_state.set(SettingsStates::Controls)
-                }
-                ButtonLabel::Other => {
-                    settings_next_state.set(SettingsStates::Other)
-                }
+                ButtonLabel::Audio => settings_next_state.set(SettingsStates::Audio),
+                ButtonLabel::Controls => settings_next_state.set(SettingsStates::Controls),
+                ButtonLabel::Other => settings_next_state.set(SettingsStates::Other),
                 ButtonLabel::Back => {
                     next_state_menu.set(previous_state.0.clone());
                 }

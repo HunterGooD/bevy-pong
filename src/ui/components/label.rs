@@ -1,4 +1,4 @@
-use crate::prelude::{*, ui::*};
+use crate::prelude::{ui::*, *};
 
 pub fn label(txt: impl Into<String>) -> impl Bundle {
     let text = txt.into();
