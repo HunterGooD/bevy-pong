@@ -2,9 +2,6 @@ use crate::prelude::*;
 
 pub struct PlayerPlugin;
 
-#[derive(Component)]
-pub struct Player;
-
 /// This plugin handles player related stuff like movement
 /// Player logic is only active during the State `GameState::Playing`
 impl Plugin for PlayerPlugin {
@@ -23,22 +20,24 @@ fn spawn_player(mut commands: Commands, textures: Res<TextureAssets>) {
     commands.spawn((
         Sprite::from_image(textures.bevy.clone()),
         Transform::from_translation(Vec3::new(0., 0., 1.)),
+        StateScoped(GameStates::Playing),
         Player,
     ));
 }
 
 fn move_player(
     time: Res<Time>,
-    actions: Res<Actions>,
+    intent: Res<MovementIntent>,
     mut player_query: Query<&mut Transform, With<Player>>,
 ) {
-    let Some(movement) = actions.player_movement else {
+    let speed = 200.;
+    if intent.0 == Vec2::ZERO {
         return;
-    };
-    let speed = 150.;
+    }
+
     let movement = Vec3::new(
-        movement.x * speed * time.delta_secs(),
-        movement.y * speed * time.delta_secs(),
+        intent.0.x * speed * time.delta_secs(),
+        intent.0.y * speed * time.delta_secs(),
         0.,
     );
     for mut player_transform in &mut player_query {

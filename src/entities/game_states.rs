@@ -22,3 +22,11 @@ pub enum MenuStates {
     Setting,
     GameOver,
 }
+
+#[derive(States, Reflect, Default, Clone, Eq, PartialEq, Debug, Hash, InspectorOptions)]
+pub enum SettingsStates {
+    #[default]
+    Audio,
+    Controls,
+    Other,
+}

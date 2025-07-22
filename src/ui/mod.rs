@@ -1,5 +1,10 @@
 use crate::prelude::{ui::*, *};
-use crate::PreviousMenuState;
+use bevy_kira_audio::prelude::*;
+use crate::ui::{
+    menu::*,
+    settings::*,
+    pause::*,
+};
 
 pub mod components;
 pub mod menu;
@@ -10,18 +15,28 @@ pub struct UIPlugin;
 
 impl Plugin for UIPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(
+        app
+            .add_plugins((
+                PauseMenuPlugin,
+                SettingsPlugin,
+                MenuPlugin,
+            ))
+            .add_systems(
             Update,
             button_processing.run_if(not(in_state(MenuStates::Disable))),
         );
     }
 }
 
-// TODO: унифицировать функцию для использования во всех системах без копирования
+// TODO: отсылать ивенты для смены состояний и прочих действий (удалить игнорирование линта)
+#[allow(clippy::too_many_arguments)]
 fn button_processing(
+    audio: Res<Audio>,
+    mut global_volume: ResMut<GlobalVolume>,
     mut previous_state: ResMut<PreviousMenuState>,
     mut app_exit: EventWriter<AppExit>,
     mut next_state: ResMut<NextState<GameStates>>,
+    mut settings_next_state: ResMut<NextState<SettingsStates>>,
     game_state: Res<State<MenuStates>>,
     mut next_state_menu: ResMut<NextState<MenuStates>>,
     mut interaction_query: Query<
@@ -53,11 +68,34 @@ fn button_processing(
                     next_state_menu.set(MenuStates::Setting);
                     info!("setting pressed");
                 }
+                ButtonLabel::Audio => {
+                    settings_next_state.set(SettingsStates::Audio)
+                }
+                ButtonLabel::Controls => {
+                    settings_next_state.set(SettingsStates::Controls)
+                }
+                ButtonLabel::Other => {
+                    settings_next_state.set(SettingsStates::Other)
+                }
                 ButtonLabel::Back => {
                     next_state_menu.set(previous_state.0.clone());
                 }
+                ButtonLabel::ToMainMenu => {
+                    next_state.set(GameStates::Menu);
+                    next_state_menu.set(MenuStates::MainMenu);
+                }
                 ButtonLabel::Quit => {
                     app_exit.write(AppExit::Success);
+                }
+                ButtonLabel::UpAudio => {
+                    global_volume.0 += 0.1;
+                    global_volume.0 = global_volume.0.clamp(0.0, 1.0);
+                    audio.set_volume(Volume::from(global_volume.0));
+                }
+                ButtonLabel::DownAudio => {
+                    global_volume.0 -= 0.1;
+                    global_volume.0 = global_volume.0.clamp(0.0, 1.0);
+                    audio.set_volume(Volume::from(global_volume.0));
                 }
             },
             Interaction::Hovered => {

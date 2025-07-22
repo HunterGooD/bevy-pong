@@ -1,13 +1,10 @@
 #![allow(clippy::type_complexity)]
-// TODO: добавить окно настроек придумать как оптимизировать это дело чтобы в настройки зайти и из паузы
-// TODO: изменение звука и т.п.
-mod actions;
+mod input;
 mod audio;
-mod camera;
 mod entities;
 mod event_managers;
 mod loading;
-mod player;
+mod game_plugins;
 mod prelude;
 mod ui;
 
@@ -21,19 +18,14 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app.init_state::<GameStates>()
-            .init_state::<MenuStates>()
-            .insert_resource(PreviousMenuState(MenuStates::default()))
+        app
             .add_plugins((
+                EntityPlugin,
                 LoadingPlugin,
-                CameraPlugin,
                 UIPlugin,
-                MenuPlugin,
-                SettingsPlugin,
-                ActionsPlugin,
+                InGamePlugins,
+                InputPlugin,
                 InternalAudioPlugin,
-                PlayerPlugin,
-                PauseMenuPlugin,
             ));
 
         #[cfg(debug_assertions)]

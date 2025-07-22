@@ -55,16 +55,10 @@ fn setup_pause(mut commands: Commands) {
                 ..default()
             },
             children![
-                (
-                    Text::new("Pause"),
-                    TextFont {
-                        font_size: 40.0,
-                        ..default()
-                    },
-                    TextColor(Color::linear_rgb(0.9, 0.9, 0.9)),
-                ),
+                label("Pause"),
                 default_button("Continue", ButtonLabel::Continue),
                 default_button("Settings", ButtonLabel::Settings),
+                default_button("In Menu", ButtonLabel::ToMainMenu),
             ],
         ));
 }

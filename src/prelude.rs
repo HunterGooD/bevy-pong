@@ -1,4 +1,6 @@
 pub(crate) use bevy::prelude::*;
+pub(crate) use leafwing_input_manager::prelude::*;
+
 // pub (crate) mod colors {
 //     // pub (crate) use bevy::color::*;
 //     // pub (crate) use bevy::color::palettes::css::*;
@@ -27,19 +29,17 @@ pub(crate) use bevy_inspector_egui::quick::WorldInspectorPlugin;
     }
 **/
 pub(crate) use crate::entities::game_states::*;
+pub(crate) use crate::entities::*;
 pub(crate) use crate::entities::resources::*;
-// pub(crate) use crate::entities::components::*;
+pub(crate) use crate::entities::components::*;
 pub(crate) mod ui {
     pub(crate) use crate::ui::components::button::*;
+    pub(crate) use crate::ui::components::label::*;
     pub(crate) use crate::ui::components::style::*;
-    pub(crate) use crate::ui::menu::*;
-    pub(crate) use crate::ui::pause::*;
-    pub(crate) use crate::ui::settings::*;
     pub(crate) use crate::ui::*;
 }
-pub(crate) use crate::actions::*;
+pub(crate) use crate::input::*;
 pub(crate) use crate::audio::*;
-pub(crate) use crate::camera::*;
 pub(crate) use crate::loading::*;
-pub(crate) use crate::player::*;
+pub(crate) use crate::game_plugins::*;
 // pub(crate) use crate::event_managers::state_manager::*;
