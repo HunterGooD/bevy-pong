@@ -24,6 +24,9 @@ impl Plugin for EntityPlugin {
             .register_type::<Player>()
             .register_type::<PlayerVisual>()
             .register_type::<TextureKind>()
+            .register_type::<MovementDampingFactor>()
+            .register_type::<CharacterController>()
+            .register_type::<MaxSlopeAngle>()
             // initial states
             .init_state::<GameStates>()
             .enable_state_scoped_entities::<GameStates>()

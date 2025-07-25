@@ -5,7 +5,16 @@ use crate::prelude::*;
 #[require(Save)]
 pub struct Player;
 
-#[derive(Component, Reflect, Default)]
+#[derive(Component, Reflect, Default, Copy, Clone)]
+pub struct MovementDampingFactor(pub Scalar);
+
+#[derive(Component, Reflect, Default, Copy, Clone)]
+pub struct CharacterController;
+
+#[derive(Component, Reflect, Default, Copy, Clone)]
+pub struct MaxSlopeAngle(pub Scalar);
+
+#[derive(Component, Reflect, Default, Copy, Clone)]
 #[reflect(Component)]
 pub struct PlayerVisual {
     pub texture_kind: TextureKind,

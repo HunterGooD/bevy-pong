@@ -20,9 +20,10 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins((
+        app.insert_resource(Gravity(Vector::ZERO)).add_plugins((
             EntityPlugin,
             LoadingPlugin,
+            PhysicsPlugins::default().with_length_unit(20.0),
             SettingSaveManagerPlugin,
             GameSaveManagerPlugin,
             UIPlugin,
@@ -34,6 +35,7 @@ impl Plugin for GamePlugin {
         #[cfg(debug_assertions)]
         {
             app.add_plugins((
+                PhysicsDebugPlugin::default(),
                 FrameTimeDiagnosticsPlugin::default(),
                 LogDiagnosticsPlugin::default(),
                 EguiPlugin::default(),

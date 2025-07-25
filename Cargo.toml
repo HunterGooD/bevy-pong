@@ -75,7 +75,7 @@ bevy = { version = "0.16", default-features = false, features = [
 ] }
 avian2d = "0.3"
 leafwing-input-manager = "0.17"
-moonshine-save = "0.5"# TODO: save simple scene
+moonshine-save = "0.5"
 moonshine-util = "0.3"
 bevy_hanabi = "0.16"
 bevy_tweening = "0.13"# TODO: add simple tweaning for ui or others...

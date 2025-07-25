@@ -52,7 +52,6 @@ fn player_input_intent(
 ) {
     let action_state = query.single().expect("Player actions not found");
     let axis = action_state.clamped_axis_pair(&PlayerAction::Move).xy();
-    println!("Moving in direction {axis}");
     movement_intent.0 = axis;
 
     if action_state.just_pressed(&PlayerAction::UseItem) {
