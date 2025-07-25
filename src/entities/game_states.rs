@@ -7,10 +7,12 @@ pub enum GameStates {
     Loading,
     // add splash with image and effect fade out
     // Splash,
-    // During this State the actual game logic is executed
-    Playing,
     // Here the menu is drawn and waiting for player interaction
     Menu,
+    // LoadingGame load from file or start new game
+    LoadingGame,
+    // During this State the actual game logic is executed
+    Playing,
 }
 
 #[derive(States, Reflect, Default, Clone, Eq, PartialEq, Debug, Hash)]

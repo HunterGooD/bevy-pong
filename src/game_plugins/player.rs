@@ -6,20 +6,18 @@ pub struct PlayerPlugin;
 /// Player logic is only active during the State `GameState::Playing`
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(
-            OnEnter(GameStates::Playing),
-            (spawn_player, restore_sprites).chain(),
-        )
-        .add_systems(
-            Update,
-            move_player
-                .run_if(in_state(GameStates::Playing))
-                .run_if(in_state(MenuStates::Disable)),
-        );
+        app.add_systems(OnEnter(GameStates::LoadingGame), spawn_player)
+            .add_systems(OnExit(GameStates::LoadingGame), restore_sprites)
+            .add_systems(
+                Update,
+                move_player
+                    .run_if(in_state(GameStates::Playing))
+                    .run_if(in_state(MenuStates::Disable)),
+            );
     }
 }
 
-fn spawn_player(mut commands: Commands) {
+fn spawn_player(mut commands: Commands, mut next_state: ResMut<NextState<GameStates>>,) {
     commands.spawn((
         Name::new("player"),
         PlayerVisual {
@@ -30,6 +28,7 @@ fn spawn_player(mut commands: Commands) {
         Transform::from_translation(Vec3::new(0., 0., 1.)),
         Player,
     ));
+    next_state.set(GameStates::Playing);
 }
 
 fn restore_sprites(
