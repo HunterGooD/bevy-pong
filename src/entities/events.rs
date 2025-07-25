@@ -1,18 +1,10 @@
-// use crate::prelude::*;
-// TODO: events for change state
+use crate::prelude::*;
 
-// #[derive(Debug, Event)]
-// pub enum GameEvent {
-//     GameState(GameStates),
-//     MenuState(MenuStates),
-// }
-//
-// #[derive(Debug, Event)]
-// pub enum StateChangeEvent {
-//     GameEvent,
-//     // Добавляем источник события для дебага
-//     WithSource {
-//         state: GameEvent,
-//         source: String,
-//     },
-// }
+#[derive(Event, Default, Clone, Copy, Debug)]
+pub struct SaveSettingEvent;
+
+#[derive(Event, Default, Clone, Copy, Debug)]
+pub struct SaveGameEvent;
+
+#[derive(Event, Default, Clone, Copy, Debug)]
+pub struct LoadGameEvent;

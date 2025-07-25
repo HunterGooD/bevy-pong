@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
 pub const BUTTON_TEXT_COLOR: Color = Color::linear_rgb(0.9, 0.9, 0.9);
+pub const BACKGROUND_SETTING_COLOR: Color = Color::hsla(217., 0.0, 0.1, 0.5);
 
 #[derive(Component)]
 pub struct ButtonColors {

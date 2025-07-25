@@ -39,7 +39,11 @@ impl Plugin for PlayerInputPlugin {
 }
 
 fn setup_player_input(mut commands: Commands) {
-    commands.spawn((PlayerInput, PlayerAction::default_input_map()));
+    commands.spawn((
+        Name::new("player input"),
+        PlayerInput,
+        PlayerAction::default_input_map(),
+    ));
 }
 
 fn player_input_intent(

@@ -4,6 +4,7 @@ use bevy::ecs::spawn::SpawnWith;
 #[derive(Component, Clone, Copy)]
 pub enum ButtonLabel {
     StartGame,
+    ContinueGame,
     Settings,
     Quit,
     // Settings
@@ -15,35 +16,21 @@ pub enum ButtonLabel {
     Back,
     //Pause
     Continue,
+    Save,
     ToMainMenu,
 }
-
-// TODO: smart actions for button
-// pub enum ButtonAction {
-//     ChangeGameState(GameStates),
-//     ChangeMenuState(MenuStates),
-//     AppExit,
-//     Back,
-// }
-//
-// pub struct InteractiveButton {
-//     pub action: ButtonAction,
-//     pub width: f32,
-//     pub label: ButtonLabel,
-//     pub text: String,
-// }
 
 pub fn default_button(in_text: impl Into<String>, label: ButtonLabel) -> impl Bundle {
     let button_colors = ButtonColors::default();
     let text = in_text.into();
     (
-        Name::new(format!("Button_{text}")),
+        Name::new(format!("default_button_{text}")),
         Button,
         label,
         BorderRadius::MAX,
         Node {
-            width: Val::Percent(80.0),
-            height: Val::Percent(25.0),
+            width: Val::Percent(75.0),
+            height: Val::Percent(20.0),
             justify_content: JustifyContent::Center,
             align_items: AlignItems::Center,
             ..Default::default()
@@ -64,7 +51,7 @@ pub fn small_button(in_text: impl Into<String>, label: ButtonLabel) -> impl Bund
     let button_colors = ButtonColors::default();
     let text = in_text.into();
     (
-        Name::new(format!("Button_{text}")),
+        Name::new(format!("small_button_{text}")),
         Button,
         label,
         BorderRadius::MAX,

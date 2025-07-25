@@ -29,6 +29,7 @@ fn setup_settings(mut commands: Commands) {
     info!("settings");
     commands
         .spawn((
+            Name::new("Main Settings menu"),
             Node {
                 width: Val::Percent(100.0),
                 height: Val::Percent(100.0),
@@ -41,6 +42,7 @@ fn setup_settings(mut commands: Commands) {
             Setting,
         ))
         .with_child((
+            Name::new("Header Settings menu"),
             Node {
                 width: Val::Percent(100.0),
                 height: Val::Percent(95.0),
@@ -62,9 +64,8 @@ fn setup_settings(mut commands: Commands) {
                         justify_content: JustifyContent::Start,
                         ..default()
                     },
-                    // BorderColor(Color::hsla(44., 0.0, 1.0, 1.0)),
                     BorderRadius::all(Val::Px(30.)),
-                    BackgroundColor(Color::hsla(217., 0.0, 0.1, 0.4)),
+                    BackgroundColor(BACKGROUND_SETTING_COLOR),
                     children![
                         small_button("Audio", ButtonLabel::Audio),
                         Node {
@@ -81,6 +82,7 @@ fn setup_settings(mut commands: Commands) {
                 ),
                 // menu settings
                 (
+                    Name::new("Setting menu"),
                     Node {
                         width: Val::Percent(90.0),
                         height: Val::Percent(78.0),
@@ -92,11 +94,12 @@ fn setup_settings(mut commands: Commands) {
                     },
                     BorderColor(Color::hsla(44., 0.0, 1.0, 0.6)),
                     BorderRadius::all(Val::Px(30.)),
-                    BackgroundColor(Color::hsla(217., 0.0, 0.1, 0.4)),
+                    BackgroundColor(BACKGROUND_SETTING_COLOR),
                     SettingArea,
                 ),
                 // actions buttons
                 (
+                    Name::new("Bottom Settings button"),
                     Node {
                         width: Val::Percent(90.0),
                         height: Val::Percent(10.0),
@@ -107,9 +110,8 @@ fn setup_settings(mut commands: Commands) {
                         justify_content: JustifyContent::Start,
                         ..default()
                     },
-                    // BorderColor(Color::hsla(44., 0.0, 1.0, 1.0)),
                     BorderRadius::all(Val::Px(30.)),
-                    BackgroundColor(Color::hsla(217., 0.0, 0.1, 0.4)),
+                    BackgroundColor(BACKGROUND_SETTING_COLOR),
                     children![small_button("Back", ButtonLabel::Back),],
                 ),
             ],
@@ -200,6 +202,7 @@ fn control_settings(
 
     let entity = menu.single().unwrap();
     commands.entity(entity).with_child((
+        Name::new("Control Widget"),
         label("Controls menu"),
         StateScoped(SettingsStates::Controls),
         ControlSetting,
@@ -220,6 +223,7 @@ fn other_settings(
 
     let entity = menu.single().unwrap();
     commands.entity(entity).with_child((
+        Name::new("Control Widget"),
         label("Other menu"),
         StateScoped(SettingsStates::Other),
         OtherSetting,

@@ -6,23 +6,56 @@ pub struct PlayerPlugin;
 /// Player logic is only active during the State `GameState::Playing`
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(GameStates::Playing), spawn_player)
-            .add_systems(
-                Update,
-                move_player
-                    .run_if(in_state(GameStates::Playing))
-                    .run_if(in_state(MenuStates::Disable)),
-            );
+        app.add_systems(
+            OnEnter(GameStates::Playing),
+            (spawn_player, restore_sprites).chain(),
+        )
+        .add_systems(
+            Update,
+            move_player
+                .run_if(in_state(GameStates::Playing))
+                .run_if(in_state(MenuStates::Disable)),
+        );
     }
 }
 
-fn spawn_player(mut commands: Commands, textures: Res<TextureAssets>) {
+fn spawn_player(mut commands: Commands) {
     commands.spawn((
-        Sprite::from_image(textures.bevy.clone()),
+        Name::new("player"),
+        PlayerVisual {
+            texture_kind: TextureKind::Player,
+            color: Color::WHITE,
+            size: Default::default(),
+        },
         Transform::from_translation(Vec3::new(0., 0., 1.)),
-        StateScoped(GameStates::Playing),
         Player,
     ));
+}
+
+fn restore_sprites(
+    mut commands: Commands,
+    textures: Res<TextureAssets>,
+    query: Query<(Entity, &PlayerVisual), Without<Sprite>>,
+) {
+    for (entity, visual) in query.iter() {
+        let texture_handle = match visual.texture_kind {
+            TextureKind::Player => textures.bevy.clone(),
+            TextureKind::Enemy => {
+                commands.entity(entity).insert((Sprite {
+                    image: textures.bevy.clone(),
+                    color: visual.color,
+                    custom_size: Some(visual.size),
+                    ..default()
+                },));
+                return;
+            }
+        };
+        println!("restore sprites {entity:?}");
+        commands.entity(entity).insert((
+            Sprite::from_image(texture_handle),
+            StateScoped(GameStates::Playing),
+        ));
+    }
 }
 
 fn move_player(

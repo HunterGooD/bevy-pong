@@ -23,13 +23,13 @@ impl Plugin for LoadingPlugin {
 // the following asset collections will be loaded during the State `GameState::Loading`
 // when done loading, they will be inserted as resources (see <https://github.com/NiklasEi/bevy_asset_loader>)
 
-#[derive(AssetCollection, Resource)]
+#[derive(AssetCollection, Resource, Reflect)]
 pub struct AudioAssets {
     #[asset(path = "audio/flying.ogg")]
     pub flying: Handle<AudioSource>,
 }
 
-#[derive(AssetCollection, Resource)]
+#[derive(AssetCollection, Resource, Reflect)]
 pub struct TextureAssets {
     #[asset(path = "textures/bevy.png")]
     pub bevy: Handle<Image>,

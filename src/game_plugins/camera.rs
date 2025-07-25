@@ -10,5 +10,5 @@ impl Plugin for CameraPlugin {
 }
 
 fn setup_camera(mut commands: Commands) {
-    commands.spawn((Camera2d, Msaa::Off));
+    commands.spawn((Name::new("Main camera"), Camera2d, Msaa::Off));
 }

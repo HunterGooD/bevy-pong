@@ -42,7 +42,11 @@ impl Plugin for UiInputPlugin {
 }
 
 fn setup_ui_input(mut commands: Commands) {
-    commands.spawn((UiInput, UiAction::default_input_map()));
+    commands.spawn((
+        Name::new("ui input"),
+        UiInput,
+        UiAction::default_input_map(),
+    ));
 }
 
 fn process_ui_input(

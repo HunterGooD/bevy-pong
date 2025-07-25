@@ -20,6 +20,7 @@ struct PauseBackground;
 fn setup_pause(mut commands: Commands) {
     info!("pause");
     commands.spawn((
+        Name::new("In game pause background"),
         Node {
             width: Val::Percent(100.0),
             height: Val::Percent(100.0),
@@ -34,6 +35,7 @@ fn setup_pause(mut commands: Commands) {
     ));
     commands
         .spawn((
+            Name::new("Main pause menu"),
             Node {
                 width: Val::Percent(100.0),
                 height: Val::Percent(100.0),
@@ -46,9 +48,10 @@ fn setup_pause(mut commands: Commands) {
             Pause,
         ))
         .with_child((
+            Name::new("pause button box"),
             Node {
-                width: Val::Percent(55.0),
-                height: Val::Percent(40.0),
+                width: Val::Percent(30.0),
+                height: Val::Percent(50.0),
                 margin: UiRect::bottom(Val::Percent(5.0)),
                 flex_direction: FlexDirection::Column,
                 align_items: AlignItems::Center,
@@ -58,6 +61,7 @@ fn setup_pause(mut commands: Commands) {
             children![
                 label("Pause"),
                 default_button("Continue", ButtonLabel::Continue),
+                default_button("Save", ButtonLabel::Save),
                 default_button("Settings", ButtonLabel::Settings),
                 default_button("In Menu", ButtonLabel::ToMainMenu),
             ],

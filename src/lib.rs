@@ -6,7 +6,9 @@ mod game_plugins;
 mod input;
 mod loading;
 mod prelude;
+mod save_manager;
 mod ui;
+mod utils;
 
 use crate::prelude::{ui::*, *};
 
@@ -21,6 +23,8 @@ impl Plugin for GamePlugin {
         app.add_plugins((
             EntityPlugin,
             LoadingPlugin,
+            SettingSaveManagerPlugin,
+            GameSaveManagerPlugin,
             UIPlugin,
             InGamePlugins,
             InputPlugin,

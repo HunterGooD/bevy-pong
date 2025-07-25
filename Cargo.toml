@@ -7,10 +7,11 @@ edition = "2021"
 exclude = ["dist", "build", "assets", "credits"]
 
 [profile.dev.package."*"]
+debug = true
 opt-level = 3
 
 [profile.dev]
-debug = 0
+debug = true
 strip = "debuginfo"
 incremental = true
 opt-level = 0
@@ -75,7 +76,8 @@ bevy = { version = "0.16", default-features = false, features = [
 avian2d = "0.3"
 leafwing-input-manager = "0.17"
 moonshine-save = "0.5"# TODO: save simple scene
-bevy_hanabi = "0.16"# TODO: add simple particles
+moonshine-util = "0.3"
+bevy_hanabi = "0.16"
 bevy_tweening = "0.13"# TODO: add simple tweaning for ui or others...
 bevy_kira_audio = { version = "0.23.0" }
 bevy_asset_loader = { version = "0.23.0" }
@@ -88,9 +90,15 @@ winit = { version = "0.30", default-features = false }
 image = { version = "0.25", default-features = false }
 ## This greatly improves WGPU's performance due to its heavy use of trace! calls
 log = { version = "0.4", features = ["max_level_debug", "release_max_level_warn"] }
+wasm-bindgen = "0.2"
+web-sys = { version = "0.3", features = ["Window", "Storage"] }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 bevy-panic-handler = "5.0"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "0.2"
+web-sys = { version = "0.3", features = ["Window", "Storage"] }
 
 [build-dependencies]
 embed-resource = "1"

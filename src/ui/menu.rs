@@ -1,4 +1,5 @@
-use crate::prelude::{ui::*, *};
+use crate::prelude::{ui::*, utils::file::saves_exists, *};
+use crate::save_manager::game::FILE_GAME_SAVE;
 
 pub struct MenuPlugin;
 
@@ -17,8 +18,17 @@ struct Menu;
 // TODO: унифицировать создание меню и кнопок для него
 fn setup_menu(mut commands: Commands) {
     info!("menu");
+    let mut is_continue_button = false;
+    let mut height = 40.0;
+    if saves_exists(FILE_GAME_SAVE) {
+        println!("Loading game");
+        height += 10.0;
+        is_continue_button = true;
+    }
+
     commands
         .spawn((
+            Name::new("Main menu"),
             Node {
                 width: Val::Percent(100.0),
                 height: Val::Percent(100.0),
@@ -30,22 +40,32 @@ fn setup_menu(mut commands: Commands) {
             GlobalZIndex(11),
             Menu,
         ))
-        .with_child((
-            Node {
-                width: Val::Percent(55.0),
-                height: Val::Percent(40.0),
-                margin: UiRect::bottom(Val::Percent(5.0)),
-                flex_direction: FlexDirection::Column,
-                align_items: AlignItems::Center,
-                justify_content: JustifyContent::SpaceAround,
-                ..default()
-            },
-            children![
-                default_button("Play", ButtonLabel::StartGame),
-                default_button("Settings", ButtonLabel::Settings),
-                default_button("Quit", ButtonLabel::Quit),
-            ],
-        ));
+        .with_children(|parent| {
+            parent
+                .spawn((
+                    Name::new("Main menu box"),
+                    Node {
+                        width: Val::Percent(30.0),
+                        height: Val::Percent(height),
+                        margin: UiRect::bottom(Val::Percent(5.0)),
+                        flex_direction: FlexDirection::Column,
+                        align_items: AlignItems::Center,
+                        justify_content: JustifyContent::SpaceAround,
+                        ..default()
+                    },
+                ))
+                .with_children(|parent_box| {
+                    let mut buttons = vec![("Play", ButtonLabel::StartGame)];
+                    if is_continue_button {
+                        buttons.push(("Continue", ButtonLabel::ContinueGame));
+                    }
+                    buttons.push(("Settings", ButtonLabel::Settings));
+                    buttons.push(("Quit", ButtonLabel::Quit));
+                    for (label_name, button_action) in buttons {
+                        parent_box.spawn(default_button(label_name, button_action));
+                    }
+                });
+        });
 }
 
 // #[derive(Component)]

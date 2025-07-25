@@ -34,7 +34,11 @@ impl Plugin for GlobalInputPlugin {
 }
 
 fn setup_ui_input(mut commands: Commands) {
-    commands.spawn((GlobalInput, GlobalAction::default_input_map()));
+    commands.spawn((
+        Name::new("global input"),
+        GlobalInput,
+        GlobalAction::default_input_map(),
+    ));
 }
 
 fn process_global_input(

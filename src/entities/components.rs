@@ -1,13 +1,30 @@
 use crate::prelude::*;
 
-#[derive(Component)]
+#[derive(Component, Reflect, Default, Copy, Clone)]
+#[reflect(Component)]
+#[require(Save)]
 pub struct Player;
 
-#[derive(Component)]
+#[derive(Component, Reflect, Default)]
+#[reflect(Component)]
+pub struct PlayerVisual {
+    pub texture_kind: TextureKind,
+    pub color: Color,
+    pub size: Vec2,
+}
+
+#[derive(Reflect, Default, Clone, Copy)]
+pub enum TextureKind {
+    #[default]
+    Player,
+    Enemy,
+}
+
+#[derive(Component, Reflect, Default, Copy, Clone)]
 pub struct PlayerInput;
 
-#[derive(Component)]
+#[derive(Component, Reflect, Default, Copy, Clone)]
 pub struct UiInput;
 
-#[derive(Component)]
+#[derive(Component, Reflect, Default, Copy, Clone)]
 pub struct GlobalInput;

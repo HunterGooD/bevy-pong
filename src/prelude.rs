@@ -1,14 +1,14 @@
-pub(crate) use bevy::prelude::*;
-pub(crate) use leafwing_input_manager::prelude::*;
-
-// pub (crate) mod colors {
-//     // pub (crate) use bevy::color::*;
-//     // pub (crate) use bevy::color::palettes::css::*;
-// }
 #[cfg(debug_assertions)]
 pub(crate) use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
+pub(crate) use bevy::prelude::*;
+pub(crate) use bevy_hanabi::prelude::*;
 #[cfg(debug_assertions)]
 pub(crate) use bevy_inspector_egui::bevy_egui::EguiPlugin;
+pub(crate) use leafwing_input_manager::prelude::*;
+pub(crate) use moonshine_save::prelude::*;
+pub(crate) use moonshine_util::prelude::*;
+#[cfg(target_arch = "wasm32")]
+pub(crate) use wasm_bindgen::prelude::*;
 // TODO: unused
 // #[cfg(debug_assertions)]
 // pub(crate) use bevy_inspector_egui::prelude::*;
@@ -17,6 +17,7 @@ pub(crate) use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 // LOCAL IMPORTS
 pub(crate) use crate::entities::components::*;
+pub(crate) use crate::entities::events::*;
 /**
     maybe use this structure for detailed imports
 
@@ -33,6 +34,10 @@ pub(crate) use crate::entities::components::*;
 pub(crate) use crate::entities::game_states::*;
 pub(crate) use crate::entities::resources::*;
 pub(crate) use crate::entities::*;
+pub(crate) use crate::save_manager::{game::*, settings::*};
+pub(crate) mod utils {
+    pub(crate) use crate::utils::*;
+}
 pub(crate) mod ui {
     pub(crate) use crate::ui::components::button::*;
     pub(crate) use crate::ui::components::label::*;
