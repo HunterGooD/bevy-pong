@@ -1,5 +1,8 @@
 use crate::prelude::{ui::*, utils::file::saves_exists, *};
 use crate::save_manager::game::FILE_GAME_SAVE;
+use bevy_tweening::lens::UiPositionLens;
+use bevy_tweening::{Animator, Delay, Tween};
+use std::time::Duration;
 
 pub struct MenuPlugin;
 
@@ -61,8 +64,48 @@ fn setup_menu(mut commands: Commands) {
                     }
                     buttons.push(("Settings", ButtonLabel::Settings));
                     buttons.push(("Quit", ButtonLabel::Quit));
+
+                    let mut start_time_ms = 0;
                     for (label_name, button_action) in buttons {
-                        parent_box.spawn(default_button(label_name, button_action));
+                        let tween_scale = Tween::new(
+                            // CubicOut | CubicInOut
+                            EaseFunction::CubicOut,
+                            Duration::from_millis(500),
+                            UiPositionLens {
+                                start: UiRect {
+                                    left: Val::Px(-700.0), // Начальная позиция за левым краем
+                                    // top: Val::Px(target_position),
+                                    ..default()
+                                },
+                                end: UiRect {
+                                    left: Val::Px(0.0), // Конечная позиция
+                                    // top: Val::Px(target_position),
+                                    ..default()
+                                },
+                            },
+                        );
+                        let animator = if start_time_ms > 0 {
+                            let delay = Delay::new(Duration::from_millis(start_time_ms));
+                            Animator::new(delay.then(tween_scale))
+                        } else {
+                            Animator::new(tween_scale)
+                        };
+                        start_time_ms += 150;
+                        parent_box.spawn((
+                            default_button(
+                                label_name,
+                                button_action,
+                                Some(Node {
+                                    left: Val::Px(-700.0),
+                                    width: Val::Percent(75.0),
+                                    height: Val::Percent(20.0),
+                                    justify_content: JustifyContent::Center,
+                                    align_items: AlignItems::Center,
+                                    ..Default::default()
+                                }),
+                            ),
+                            animator,
+                        ));
                     }
                 });
         });

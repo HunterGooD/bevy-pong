@@ -11,6 +11,7 @@ mod ui;
 mod utils;
 
 use crate::prelude::{ui::*, *};
+use bevy_tweening::TweeningPlugin;
 
 // This example game uses States to separate logic
 // See https://bevy-cheatbook.github.io/programming/states.html
@@ -24,6 +25,7 @@ impl Plugin for GamePlugin {
             EntityPlugin,
             LoadingPlugin,
             PhysicsPlugins::default().with_length_unit(20.0),
+            TweeningPlugin,
             SettingSaveManagerPlugin,
             GameSaveManagerPlugin,
             UIPlugin,

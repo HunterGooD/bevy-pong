@@ -60,10 +60,10 @@ fn setup_pause(mut commands: Commands) {
             },
             children![
                 label("Pause"),
-                default_button("Continue", ButtonLabel::Continue),
-                default_button("Save", ButtonLabel::Save),
-                default_button("Settings", ButtonLabel::Settings),
-                default_button("In Menu", ButtonLabel::ToMainMenu),
+                default_button("Continue", ButtonLabel::Continue, None),
+                default_button("Save", ButtonLabel::Save, None),
+                default_button("Settings", ButtonLabel::Settings, None),
+                default_button("In Menu", ButtonLabel::ToMainMenu, None),
             ],
         ));
 }

@@ -57,7 +57,6 @@ fn button_processing(
                 ButtonLabel::ContinueGame => {
                     next_state_menu.set(MenuStates::Disable);
                     next_state.set(GameStates::LoadingGame);
-                    // TODO: load game // maybe status loading save game
                     load_game_event.write_default();
                 }
                 ButtonLabel::Continue => {

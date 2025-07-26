@@ -70,6 +70,7 @@ bevy = { version = "0.16", default-features = false, features = [
     "png",
     "sysinfo_plugin",
     "webgl2",
+#    "webgpu",
     "x11",
     "dynamic_linking",
 ] }
@@ -77,8 +78,8 @@ avian2d = "0.3"
 leafwing-input-manager = "0.17"
 moonshine-save = "0.5"
 moonshine-util = "0.3"
-bevy_hanabi = "0.16"
-bevy_tweening = "0.13"# TODO: add simple tweaning for ui or others...
+# bevy_hanabi = "0.16" # maybe change to bevy_enoki
+bevy_tweening = "0.13"
 bevy_kira_audio = { version = "0.23.0" }
 bevy_asset_loader = { version = "0.23.0" }
 bevy-inspector-egui = "0.32"

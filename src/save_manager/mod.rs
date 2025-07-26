@@ -39,14 +39,17 @@ impl std::io::Write for LocalStorageWriter {
 #[cfg(target_arch = "wasm32")]
 impl LocalStorageReader {
     pub fn new(key: String) -> Self {
-        let data = web_sys::window()
+        let data = match web_sys::window()
             .unwrap()
             .local_storage()
             .unwrap()
             .unwrap()
             .get_item(&key)
             .unwrap()
-            .unwrap();
+        {
+            None => "".to_string(),
+            Some(str) => str,
+        };
         Self {
             data: data.into_bytes(),
             position: 0,

@@ -202,7 +202,6 @@ fn control_settings(
 
     let entity = menu.single().unwrap();
     commands.entity(entity).with_child((
-        Name::new("Control Widget"),
         label("Controls menu"),
         StateScoped(SettingsStates::Controls),
         ControlSetting,
@@ -223,7 +222,6 @@ fn other_settings(
 
     let entity = menu.single().unwrap();
     commands.entity(entity).with_child((
-        Name::new("Control Widget"),
         label("Other menu"),
         StateScoped(SettingsStates::Other),
         OtherSetting,

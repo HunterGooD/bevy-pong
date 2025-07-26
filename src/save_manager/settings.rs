@@ -84,6 +84,9 @@ fn loading_settings(mut commands: Commands) {
     #[cfg(target_arch = "wasm32")]
     {
         let reader = LocalStorageReader::new(FILE_SETTING_SAVE.to_string());
+        if reader.data.is_empty() {
+            return;
+        }
         commands.trigger_load(LoadWorld::default_from_stream(reader));
         return;
     }

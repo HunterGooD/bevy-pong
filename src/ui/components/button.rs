@@ -20,21 +20,30 @@ pub enum ButtonLabel {
     ToMainMenu,
 }
 
-pub fn default_button(in_text: impl Into<String>, label: ButtonLabel) -> impl Bundle {
+pub fn default_button(
+    in_text: impl Into<String>,
+    label: ButtonLabel,
+    node_option: Option<Node>,
+) -> impl Bundle {
     let button_colors = ButtonColors::default();
-    let text = in_text.into();
-    (
-        Name::new(format!("default_button_{text}")),
-        Button,
-        label,
-        BorderRadius::MAX,
+    let node = if let Some(node) = node_option {
+        node
+    } else {
         Node {
             width: Val::Percent(75.0),
             height: Val::Percent(20.0),
             justify_content: JustifyContent::Center,
             align_items: AlignItems::Center,
             ..Default::default()
-        },
+        }
+    };
+    let text = in_text.into();
+    (
+        Name::new(format!("default_button_{text}")),
+        Button,
+        label,
+        BorderRadius::MAX,
+        node,
         BackgroundColor(button_colors.normal),
         button_colors,
         Children::spawn(SpawnWith(|parent: &mut ChildSpawner| {

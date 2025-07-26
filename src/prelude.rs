@@ -2,7 +2,6 @@ pub(crate) use avian2d::{math::*, prelude::*};
 #[cfg(debug_assertions)]
 pub(crate) use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 pub(crate) use bevy::{prelude::*, window::PrimaryWindow};
-pub(crate) use bevy_hanabi::prelude::*;
 #[cfg(debug_assertions)]
 pub(crate) use bevy_inspector_egui::bevy_egui::EguiPlugin;
 pub(crate) use leafwing_input_manager::prelude::*;

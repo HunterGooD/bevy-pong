@@ -1,4 +1,6 @@
 use crate::prelude::*;
+#[cfg(target_arch = "wasm32")]
+use crate::save_manager::{LocalStorageReader, LocalStorageWriter};
 use moonshine_save::save::DefaultSaveFilter;
 
 pub const FILE_GAME_SAVE: &str = "game.ron";
@@ -9,9 +11,9 @@ impl Plugin for GameSaveManagerPlugin {
         app.add_observer(save_on::<GameSaveEvent>).add_systems(
             Update,
             (
-                // save_game_event,
+                save_game_event,
                 load_game_event,
-                test_game_player,
+                // test_game_player,
             ),
         );
     }
@@ -65,12 +67,11 @@ impl SaveEvent for GameSaveEvent {
     }
 }
 
-// fn save_game_event(mut commands: Commands, mut save_event: EventReader<SaveGameEvent>) {
-//     for ev in save_event.read() {
-//         println!("game save event: {:?} ", ev);
-//         commands.trigger_save(SaveWorld::default_into_file(FILE_GAME_SAVE))
-//     }
-// }
+fn save_game_event(mut commands: Commands, mut save_event: EventReader<SaveGameEvent>) {
+    for _ in save_event.read() {
+        commands.trigger_save(GameSaveEvent::new(FILE_GAME_SAVE))
+    }
+}
 
 fn load_game_event(mut commands: Commands, mut game_events: EventReader<LoadGameEvent>) {
     for _ in game_events.read() {
@@ -78,15 +79,15 @@ fn load_game_event(mut commands: Commands, mut game_events: EventReader<LoadGame
     }
 }
 
-fn test_game_player(
-    mut commands: Commands,
-    mut game_events: EventReader<SaveGameEvent>,
-    query: Query<Entity, With<Save>>,
-) {
-    for _ in game_events.read() {
-        if let Ok(entity) = query.single() {
-            commands.entity(entity).log_components();
-        }
-        commands.trigger_save(GameSaveEvent::new(FILE_GAME_SAVE));
-    }
-}
+// fn test_game_player(
+//     mut commands: Commands,
+//     mut game_events: EventReader<SaveGameEvent>,
+//     query: Query<Entity, With<Save>>,
+// ) {
+//     for _ in game_events.read() {
+//         if let Ok(entity) = query.single() {
+//             commands.entity(entity).log_components();
+//         }
+//         commands.trigger_save(GameSaveEvent::new(FILE_GAME_SAVE));
+//     }
+// }

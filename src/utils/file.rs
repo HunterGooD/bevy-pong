@@ -7,6 +7,6 @@ pub fn saves_exists(path: &str) -> bool {
     #[cfg(target_arch = "wasm32")]
     {
         let storage = web_sys::window().unwrap().local_storage().unwrap().unwrap();
-        storage.get
+        storage.get_item(path).unwrap().is_some()
     }
 }
