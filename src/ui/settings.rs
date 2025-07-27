@@ -125,10 +125,10 @@ fn audio_settings(
     menu: Query<Entity, With<SettingArea>>,
     audio_setting: Query<Entity, With<AudioSetting>>,
 ) {
-    info!("audio_settings");
     if !audio_setting.is_empty() {
         return;
     }
+    info!("audio_settings");
 
     let entity = menu.single().unwrap();
     commands.entity(entity).with_child((
@@ -195,10 +195,10 @@ fn control_settings(
     menu: Query<Entity, With<SettingArea>>,
     control_setting: Query<Entity, With<ControlSetting>>,
 ) {
-    info!("controls_settings");
     if !control_setting.is_empty() {
         return;
     }
+    info!("controls_settings");
 
     let entity = menu.single().unwrap();
     commands.entity(entity).with_child((
@@ -215,10 +215,10 @@ fn other_settings(
     menu: Query<Entity, With<SettingArea>>,
     other_setting: Query<Entity, With<OtherSetting>>,
 ) {
-    info!("other_settings");
     if !other_setting.is_empty() {
         return;
     }
+    info!("other_settings");
 
     let entity = menu.single().unwrap();
     commands.entity(entity).with_child((

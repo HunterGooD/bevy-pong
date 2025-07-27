@@ -11,20 +11,17 @@ pub struct LocalStorageWriter {
 }
 
 #[cfg(target_arch = "wasm32")]
-pub struct LocalStorageReader {
-    pub data: Vec<u8>,
-    pub position: usize,
-}
-
-#[cfg(target_arch = "wasm32")]
 impl std::io::Write for LocalStorageWriter {
     fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
         self.buffer.extend_from_slice(buf);
+        info!("write func call and extend buffer {}", buf.len());
+        self.flush();
         Ok(buf.len())
     }
 
     fn flush(&mut self) -> std::io::Result<()> {
         let s = String::from_utf8(self.buffer.clone()).unwrap();
+        info!("start save to {} with data {}", self.key, s.clone());
         web_sys::window()
             .unwrap()
             .local_storage()
@@ -34,6 +31,12 @@ impl std::io::Write for LocalStorageWriter {
             .unwrap();
         Ok(())
     }
+}
+
+#[cfg(target_arch = "wasm32")]
+pub struct LocalStorageReader {
+    pub data: Vec<u8>,
+    pub position: usize,
 }
 
 #[cfg(target_arch = "wasm32")]

@@ -59,19 +59,19 @@ fn process_ui_input(
     let action_state = query.single().expect("Global actions not found");
 
     if action_state.just_pressed(&UiAction::Up) {
-        println!("Up in ui")
+        info!("TODO: Up in ui")
     }
 
     if action_state.just_pressed(&UiAction::Down) {
-        println!("Down in ui")
+        info!("TODO: Down in ui")
     }
 
     if action_state.just_pressed(&UiAction::Confirm) {
-        println!("Confirm in ui")
+        info!("TODO: Confirm in ui")
     }
 
     if action_state.just_pressed(&UiAction::Back) {
-        println!("Back in ui");
+        info!("Back in ui");
         match state.get() {
             MenuStates::PauseMenu => next_state.set(MenuStates::Disable),
             MenuStates::Setting => next_state.set(previous_state.0.clone()),

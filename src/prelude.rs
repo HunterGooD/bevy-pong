@@ -35,6 +35,7 @@ pub(crate) use crate::entities::game_states::*;
 pub(crate) use crate::entities::resources::*;
 pub(crate) use crate::entities::*;
 pub(crate) use crate::save_manager::{game::*, settings::*};
+pub(crate) use crate::effects::EffectsPlugin;
 pub(crate) mod utils {
     pub(crate) use crate::utils::*;
 }

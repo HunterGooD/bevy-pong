@@ -70,15 +70,14 @@ bevy = { version = "0.16", default-features = false, features = [
     "png",
     "sysinfo_plugin",
     "webgl2",
-#    "webgpu",
     "x11",
-    "dynamic_linking",
 ] }
 avian2d = "0.3"
 leafwing-input-manager = "0.17"
 moonshine-save = "0.5"
 moonshine-util = "0.3"
 # bevy_hanabi = "0.16" # maybe change to bevy_enoki
+bevy_enoki = "0.4"
 bevy_tweening = "0.13"
 bevy_kira_audio = { version = "0.23.0" }
 bevy_asset_loader = { version = "0.23.0" }
@@ -100,6 +99,7 @@ bevy-panic-handler = "5.0"
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen = "0.2"
 web-sys = { version = "0.3", features = ["Window", "Storage"] }
+
 
 [build-dependencies]
 embed-resource = "1"

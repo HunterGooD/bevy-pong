@@ -6,6 +6,13 @@ use moonshine_save::save::DefaultSaveFilter;
 pub const FILE_GAME_SAVE: &str = "game.ron";
 pub struct GameSaveManagerPlugin;
 
+struct GameSaveEvent {
+    #[cfg(not(target_arch = "wasm32"))]
+    pub path: String,
+    #[cfg(target_arch = "wasm32")]
+    pub stream: LocalStorageWriter,
+}
+
 impl Plugin for GameSaveManagerPlugin {
     fn build(&self, app: &mut App) {
         app.add_observer(save_on::<GameSaveEvent>).add_systems(
@@ -16,18 +23,6 @@ impl Plugin for GameSaveManagerPlugin {
                 // test_game_player,
             ),
         );
-    }
-}
-
-struct GameSaveEvent {
-    pub path: String,
-}
-
-impl GameSaveEvent {
-    pub fn new(path: &str) -> Self {
-        Self {
-            path: path.to_string(),
-        }
     }
 }
 
@@ -63,18 +58,53 @@ impl SaveEvent for GameSaveEvent {
     }
 
     fn output(self) -> SaveOutput {
-        SaveOutput::file(self.path)
+        #[cfg(target_arch = "wasm32")]
+        {
+            info!("output stream created!");
+            SaveOutput::stream(self.stream)
+        }
+
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            SaveOutput::file(self.path)
+        }
     }
 }
 
 fn save_game_event(mut commands: Commands, mut save_event: EventReader<SaveGameEvent>) {
     for _ in save_event.read() {
-        commands.trigger_save(GameSaveEvent::new(FILE_GAME_SAVE))
+
+        #[cfg(target_arch = "wasm32")]
+        {
+            let writer = LocalStorageWriter {
+                key: FILE_GAME_SAVE.to_string(),
+                buffer: Vec::new(),
+            };
+            info!("Start saving");
+            commands.trigger_save(GameSaveEvent { stream: writer });
+        }
+
+        #[cfg(not(target_arch = "wasm32"))]
+        commands.trigger_save(GameSaveEvent {
+            path: FILE_GAME_SAVE.to_string(),
+        });
     }
 }
 
 fn load_game_event(mut commands: Commands, mut game_events: EventReader<LoadGameEvent>) {
     for _ in game_events.read() {
+        #[cfg(target_arch = "wasm32")]
+        {
+            let reader = LocalStorageReader::new(FILE_GAME_SAVE.to_string());
+            if reader.data.is_empty() {
+                info!("is empty key {FILE_GAME_SAVE}");
+                return;
+            }
+            info!("Start loading game");
+            commands.trigger_load(LoadWorld::default_from_stream(reader));
+        }
+
+        #[cfg(not(target_arch = "wasm32"))]
         commands.trigger_load(LoadWorld::default_from_file(FILE_GAME_SAVE));
     }
 }

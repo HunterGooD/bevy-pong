@@ -16,6 +16,7 @@ impl Plugin for SettingSaveManagerPlugin {
 }
 
 struct SettingSaveEvent {
+    #[cfg(not(target_arch = "wasm32"))]
     pub path: String,
     #[cfg(target_arch = "wasm32")]
     pub stream: LocalStorageWriter,
@@ -50,6 +51,7 @@ impl SaveEvent for SettingSaveEvent {
     fn output(self) -> SaveOutput {
         #[cfg(target_arch = "wasm32")]
         {
+            info!("output stream created!");
             SaveOutput::stream(self.stream)
         }
 
@@ -66,15 +68,19 @@ fn save_settings(
     global_volume: Res<GlobalVolume>,
 ) {
     for ev in save_event.read() {
-        println!("save event: {:?} global volume {:?}", ev, global_volume.0);
+        info!("save event: {:?} global volume {:?}", ev, global_volume.0);
         #[cfg(target_arch = "wasm32")]
-        let writer = LocalStorageWriter {
-            key: FILE_SETTING_SAVE.to_string(),
-            buffer: Vec::new(),
-        };
+        {
+            let writer = LocalStorageWriter {
+                key: FILE_SETTING_SAVE.to_string(),
+                buffer: Vec::new(),
+            };
+            info!("Start saving");
+            commands.trigger_save(SettingSaveEvent { stream: writer });
+        }
+
+        #[cfg(not(target_arch = "wasm32"))]
         commands.trigger_save(SettingSaveEvent {
-            #[cfg(target_arch = "wasm32")]
-            stream: writer,
             path: FILE_SETTING_SAVE.to_string(),
         });
     }
@@ -85,10 +91,13 @@ fn loading_settings(mut commands: Commands) {
     {
         let reader = LocalStorageReader::new(FILE_SETTING_SAVE.to_string());
         if reader.data.is_empty() {
+            println!("is empty key {FILE_SETTING_SAVE}");
             return;
         }
+        println!("Start loading settings");
         commands.trigger_load(LoadWorld::default_from_stream(reader));
-        return;
     }
+
+    #[cfg(not(target_arch = "wasm32"))]
     commands.trigger_load(LoadWorld::default_from_file(FILE_SETTING_SAVE));
 }

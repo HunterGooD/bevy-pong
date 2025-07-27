@@ -9,6 +9,7 @@ mod prelude;
 mod save_manager;
 mod ui;
 mod utils;
+mod effects;
 
 use crate::prelude::{ui::*, *};
 use bevy_tweening::TweeningPlugin;
@@ -26,6 +27,7 @@ impl Plugin for GamePlugin {
             LoadingPlugin,
             PhysicsPlugins::default().with_length_unit(20.0),
             TweeningPlugin,
+            EffectsPlugin,
             SettingSaveManagerPlugin,
             GameSaveManagerPlugin,
             UIPlugin,

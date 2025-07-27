@@ -40,7 +40,7 @@ fn spawn_player(
 
     let width = window.width();
     let height = window.height();
-    println!("width {width}, height {height}");
+    info!("width {width}, height {height}");
 
     // spawn box on screen
     commands.spawn((
