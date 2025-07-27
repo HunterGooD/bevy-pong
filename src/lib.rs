@@ -1,5 +1,6 @@
 #![allow(clippy::type_complexity)]
 mod audio;
+mod effects;
 mod entities;
 mod event_managers;
 mod game_plugins;
@@ -9,7 +10,6 @@ mod prelude;
 mod save_manager;
 mod ui;
 mod utils;
-mod effects;
 
 use crate::prelude::{ui::*, *};
 use bevy_tweening::TweeningPlugin;

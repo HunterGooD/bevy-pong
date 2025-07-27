@@ -73,7 +73,6 @@ impl SaveEvent for GameSaveEvent {
 
 fn save_game_event(mut commands: Commands, mut save_event: EventReader<SaveGameEvent>) {
     for _ in save_event.read() {
-
         #[cfg(target_arch = "wasm32")]
         {
             let writer = LocalStorageWriter {

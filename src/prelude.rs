@@ -16,6 +16,7 @@ pub(crate) use wasm_bindgen::prelude::*;
 pub(crate) use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 // LOCAL IMPORTS
+pub(crate) use crate::effects::EffectsPlugin;
 pub(crate) use crate::entities::components::*;
 pub(crate) use crate::entities::events::*;
 /**
@@ -35,7 +36,6 @@ pub(crate) use crate::entities::game_states::*;
 pub(crate) use crate::entities::resources::*;
 pub(crate) use crate::entities::*;
 pub(crate) use crate::save_manager::{game::*, settings::*};
-pub(crate) use crate::effects::EffectsPlugin;
 pub(crate) mod utils {
     pub(crate) use crate::utils::*;
 }
