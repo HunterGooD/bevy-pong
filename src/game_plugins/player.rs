@@ -1,12 +1,12 @@
 use crate::prelude::*;
-
+use crate::game_plugins::ball::*;
 pub struct PlayerPlugin;
 
 /// This plugin handles player related stuff like movement
 /// Player logic is only active during the State `GameState::Playing`
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(GameStates::LoadingGame), spawn_player)
+        app.add_systems(OnEnter(GameStates::LoadingGame), (spawn_ball, spawn_player).chain())
             .add_systems(OnExit(GameStates::LoadingGame), restore_sprites)
             .add_systems(
                 Update,
@@ -15,6 +15,8 @@ impl Plugin for PlayerPlugin {
                     .run_if(in_state(GameStates::Playing))
                     .run_if(in_state(MenuStates::Disable)),
             )
+            .add_systems(OnExit(MenuStates::Disable), pause_physics)
+            .add_systems(OnEnter(MenuStates::Disable), resume_physics)
             .add_systems(
                 PhysicsSchedule,
                 kinematic_controller_collisions.in_set(NarrowPhaseSet::Last),
@@ -49,6 +51,7 @@ fn spawn_player(
         RigidBody::Static,
         StateScoped(GameStates::Playing),
         Transform::from_xyz(0.0, height / 2.0, 1.0),
+        Restitution::new(0.6),
     ));
     commands.spawn((
         Name::new("down paddle"),
@@ -56,6 +59,7 @@ fn spawn_player(
         RigidBody::Static,
         StateScoped(GameStates::Playing),
         Transform::from_xyz(0.0, height / 2.0 - height, 1.0),
+        Restitution::new(0.6),
     ));
     commands.spawn((
         Name::new("right paddle"),
@@ -63,6 +67,7 @@ fn spawn_player(
         RigidBody::Static,
         StateScoped(GameStates::Playing),
         Transform::from_xyz(width / 2.0, 0.0, 1.0),
+        Restitution::new(0.6),
     ));
     commands.spawn((
         Name::new("left paddle"),
@@ -70,9 +75,18 @@ fn spawn_player(
         RigidBody::Static,
         StateScoped(GameStates::Playing),
         Transform::from_xyz(width / 2.0 - width, 0.0, 1.0),
+        Restitution::new(0.6),
     ));
     // todo: центрелизовать смену состояния к примеру во время игры будут спавнится и другие объекты нужно чтобы все процессы прошли после чего и следует сменить состояние
     next_state.set(GameStates::Playing);
+}
+
+fn pause_physics(mut time: ResMut<Time<Physics>>) {
+    time.pause();
+}
+
+fn resume_physics(mut time: ResMut<Time<Physics>>) {
+    time.unpause();
 }
 
 fn restore_sprites(
@@ -131,7 +145,7 @@ fn move_player(
             return;
         }
         let delta_time = time.delta_secs_f64().adjust_precision();
-        let movement_acceleration = 3000.0;
+        let movement_acceleration = 4000.0;
         linear_velocity.x += intent.0.x * movement_acceleration * delta_time;
         linear_velocity.y += intent.0.y * movement_acceleration * delta_time;
         let max_speed = 500.0;

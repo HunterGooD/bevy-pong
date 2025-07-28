@@ -33,6 +33,9 @@ pub struct AudioAssets {
 pub struct TextureAssets {
     #[asset(path = "textures/bevy.png")]
     pub bevy: Handle<Image>,
+
+    #[asset(path = "textures/github.png")]
+    pub git_hub: Handle<Image>,
 }
 
 fn to_main_menu(mut next_menu_state: ResMut<NextState<MenuStates>>) {
